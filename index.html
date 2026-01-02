@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>马币 MA Coin | Year of the Horse 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@300;400;700;900&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --gold: #FFD700;
+            --imperial-red: #C41E3A;
+            --cyber-cyan: #00F3FF;
+            --deep-black: #050505;
+        }
+
+        body {
+            background-color: var(--deep-black);
+            color: white;
+            font-family: 'Noto Sans SC', 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-chinese { font-family: 'Ma Shan+Zheng', cursive; }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border: 1px solid var(--gold);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .text-gradient-gold {
+            background: linear-gradient(to bottom, #FFF5C3 0%, #FFD700 50%, #B8860B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--imperial-red), #ff4d4d);
+            box-shadow: 0 0 15px rgba(196, 30, 58, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 25px rgba(196, 30, 58, 0.8), 0 0 10px var(--cyber-cyan);
+            transform: scale(1.05);
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .lang-en { display: none; }
+
+        .horse-glow {
+            filter: drop-shadow(0 0 15px var(--imperial-red));
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.8; filter: drop-shadow(0 0 10px var(--imperial-red)); }
+            50% { opacity: 1; filter: drop-shadow(0 0 30px var(--gold)); }
+        }
+
+        .scroll-reveal { opacity: 0; transform: translateY(30px); }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 px-6 py-4 flex justify-between items-center backdrop-blur-md border-b border-white/10">
+        <div class="flex items-center gap-2">
+            <div class="w-10 h-10 bg-gradient-to-tr from-red-600 to-yellow-500 rounded-full flex items-center justify-center font-bold text-black">MA</div>
+            <span class="text-xl font-bold tracking-tighter text-gradient-gold">MA COIN</span>
+        </div>
+        <div class="flex items-center gap-6">
+            <button onclick="toggleLang()" id="lang-toggle" class="px-3 py-1 border border-gold/50 rounded-full text-xs hover:bg-gold hover:text-black transition-all">
+                EN / 中文
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden pt-20">
+        <!-- Abstract Cyber Horse SVG -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20 w-[800px] h-[800px] pointer-events-none">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="horse-glow">
+                <path fill="none" stroke="url(#grad1)" stroke-width="0.5" d="M40,160 Q60,100 100,80 T160,40 M50,150 Q80,120 120,110 T170,70" />
+                <defs>
+                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:var(--imperial-red);stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:var(--gold);stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+
+        <div class="relative z-10">
+            <h2 class="text-gold tracking-[0.3em] mb-4 font-light text-xl reveal">
+                <span class="lang-zh">2026 丙午马年</span>
+                <span class="lang-en">2026 - YEAR OF THE HORSE</span>
+            </h2>
+            <h1 class="text-6xl md:text-9xl font-black mb-6 reveal">
+                <span class="lang-zh leading-tight">马年买马币<br><span class="text-gradient-gold">马上有未来</span></span>
+                <span class="lang-en leading-tight">YEAR OF THE HORSE<br><span class="text-gradient-gold">RIDE THE FUTURE</span></span>
+            </h1>
+            <p class="text-gray-400 text-lg md:text-2xl mb-10 reveal">
+                <span class="lang-zh">马年，就该有马。</span>
+                <span class="lang-en">It’s the Year of the Horse. Own a Horse.</span>
+            </p>
+            
+            <div class="flex flex-col md:flex-row gap-4 justify-center reveal">
+                <a class="btn-primary px-10 py-4 rounded-xl text-xl font-bold cursor-pointer" href="https://x.com/mamemecoin">
+                    <span class="lang-zh">查看X</span><span class="lang-en">Buy MA Now</span>
+                </a>
+                <a class="glass-card px-10 py-4 rounded-xl text-xl font-bold border-cyan-500/30 text-cyan-400" href="https://t.me/mamemecoin">
+                    <span class="lang-zh">加入马群</span><span class="lang-en">Join The Herd</span>
+                </a>
+            </div>
+        </div>
+
+
+    </section>
+
+    <!-- Why MA Section -->
+    <section class="py-24 px-6 max-w-7xl mx-auto">
+        <h2 class="text-4xl font-bold mb-16 text-center reveal">
+            <span class="lang-zh">为什么选择马币？</span>
+            <span class="lang-en">Why MA Coin?</span>
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <!-- Card 1 -->
+            <div class="glass-card p-8 rounded-2xl scroll-reveal">
+                <div class="text-cyan-400 text-4xl mb-4">⚡</div>
+                <h3 class="text-xl font-bold mb-2">
+                    <span class="lang-zh">极速</span><span class="lang-en">Speed</span>
+                </h3>
+                <p class="text-gray-400 text-sm">
+                    <span class="lang-zh">千里马般的交易速度，瞬息之间捕捉财富机会。</span>
+                    <span class="lang-en">Like a legendary steed, MA delivers lightning-fast transaction speeds.</span>
+                </p>
+            </div>
+            <!-- Card 2 -->
+            <div class="glass-card p-8 rounded-2xl scroll-reveal">
+                <div class="text-red-500 text-4xl mb-4">🤝</div>
+                <h3 class="text-xl font-bold mb-2">
+                    <span class="lang-zh">共识</span><span class="lang-en">Community</span>
+                </h3>
+                <p class="text-gray-400 text-sm">
+                    <span class="lang-zh">万马奔腾，凝聚全球马币持有者的最强共识。</span>
+                    <span class="lang-en">A powerful herd of global holders moving with unified momentum.</span>
+                </p>
+            </div>
+            <!-- Card 3 -->
+            <div class="glass-card p-8 rounded-2xl scroll-reveal">
+                <div class="text-gold text-4xl mb-4">🧧</div>
+                <h3 class="text-xl font-bold mb-2">
+                    <span class="lang-zh">马年叙事</span><span class="lang-en">The Narrative</span>
+                </h3>
+                <p class="text-gray-400 text-sm">
+                    <span class="lang-zh">2026年马年官方Meme，承载整年的好运与财富。</span>
+                    <span class="lang-en">The definitive 2026 meme, carrying a year of luck and fortune.</span>
+                </p>
+            </div>
+            <!-- Card 4 -->
+            <div class="glass-card p-8 rounded-2xl scroll-reveal">
+                <div class="text-purple-500 text-4xl mb-4">🔥</div>
+                <h3 class="text-xl font-bold mb-2">
+                    <span class="lang-zh">Meme 能量</span><span class="lang-en">Meme Power</span>
+                </h3>
+                <p class="text-gray-400 text-sm">
+                    <span class="lang-zh">简单、纯粹、有力。不仅是代币，更是文化。</span>
+                    <span class="lang-en">Simple, pure, powerful. More than a token, it's a culture.</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Narrative Section -->
+    <section class="py-24 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto text-center px-6">
+            <div class="h-[1px] w-full bg-gradient-to-r from-transparent via-gold to-transparent mb-16"></div>
+            <div class="scroll-reveal">
+                <p class="text-2xl md:text-4xl italic mb-8 text-gray-300">
+                    <span class="lang-zh">“每一年都有它的象征。”</span>
+                    <span class="lang-en">“Every year has a symbol.”</span>
+                </p>
+                <p class="text-4xl md:text-6xl font-bold mb-8 text-white">
+                    <span class="lang-zh">“今年，属于<span class="text-gradient-gold">马</span>。”</span>
+                    <span class="lang-en">“This year belongs to the <span class="text-gradient-gold">Horse</span>.”</span>
+                </p>
+                <p class="text-2xl md:text-4xl italic text-gray-300">
+                    <span class="lang-zh">“而马，属于马币。”</span>
+                    <span class="lang-en">“And the Horse belongs to MA.”</span>
+                </p>
+            </div>
+            <div class="h-[1px] w-full bg-gradient-to-r from-transparent via-gold to-transparent mt-16"></div>
+        </div>
+    </section>
+
+    <!-- Token Overview -->
+    <section class="py-24 px-6 bg-gradient-to-b from-transparent to-red-950/20">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-4xl font-bold mb-12 text-center reveal">
+                <span class="lang-zh">代币概览</span><span class="lang-en">Tokenomics</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass-card p-10 rounded-3xl flex justify-between items-center scroll-reveal">
+                    <div>
+                        <p class="text-gold text-sm uppercase tracking-widest mb-1">Chain</p>
+                        <h4 class="text-2xl font-bold">SOLANA / ETH</h4>
+                    </div>
+                    <div class="text-4xl">💎</div>
+                </div>
+                <div class="glass-card p-10 rounded-3xl flex justify-between items-center scroll-reveal">
+                    <div>
+                        <p class="text-gold text-sm uppercase tracking-widest mb-1">Launch</p>
+                        <h4 class="text-2xl font-bold">Fair Launch</h4>
+                    </div>
+                    <div class="text-4xl">🚀</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 border-t border-white/10 text-center">
+        <div class="mb-8">
+            <div class="w-16 h-16 bg-gradient-to-tr from-red-600 to-yellow-500 rounded-full flex items-center justify-center font-bold text-black mx-auto text-xl mb-4">MA</div>
+            <p class="text-2xl font-bold tracking-widest mb-2">
+                <span class="lang-zh">马在，人就在</span>
+                <span class="lang-en">IN MA WE TRUST</span>
+            </p>
+        </div>
+        <p class="text-xs text-gray-600">© 2026 MA Coin. For the Herd.</p>
+    </footer>
+
+    <script>
+        // --- Language Toggle Logic ---
+        let currentLang = 'zh';
+        function toggleLang() {
+            currentLang = currentLang === 'zh' ? 'en' : 'zh';
+            document.querySelectorAll('.lang-zh').forEach(el => el.style.display = currentLang === 'zh' ? 'inline-block' : 'none');
+            document.querySelectorAll('.lang-en').forEach(el => el.style.display = currentLang === 'en' ? 'inline-block' : 'none');
+            document.getElementById('lang-toggle').innerText = currentLang === 'zh' ? 'EN' : '中文';
+        }
+
+        // --- GSAP Animations ---
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Animations
+        gsap.from(".reveal", {
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power4.out"
+        });
+
+        // Scroll Reveal Animations
+        document.querySelectorAll('.scroll-reveal').forEach((el) => {
+            gsap.to(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 85%",
+                },
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                ease: "power3.out"
+            });
+        });
+
+        // --- Background Particles/Fireworks ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.life = Math.random() * 1;
+                this.color = Math.random() > 0.5 ? '#FFD700' : '#C41E3A';
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = 0.2;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 100; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Mouse interaction for subtle glow
+        window.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            document.body.style.background = `radial-gradient(circle at ${x}% ${y}%, #1a0505 0%, #050505 50%)`;
+        });
+    </script>
+</body>
+</html>
